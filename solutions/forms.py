@@ -12,3 +12,11 @@ class InfrastructureForm(forms.ModelForm):
       'materials': forms.Textarea(attrs={'class': 'form-control'}),
       'issues': forms.Textarea(attrs={'class': 'form-control'}),
     }
+
+class IssuesForm(forms.ModelForm):
+  class Meta:
+    model = Infrastructure
+    fields = ['issues']
+    widgets = {
+      'issues': forms.Textarea(attrs={'class': 'form-control'}),
+    }

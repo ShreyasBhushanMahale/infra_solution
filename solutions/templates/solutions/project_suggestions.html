@@ -7,8 +7,14 @@
   </head>
   <body>
     <h1>Project Suggestions</h1>
+    <p>
+      This tool will help you get an idea of infrastructure projects that you
+      are interested in either fixing or building.
+    </p>
     <form method="post">
-      {% csrf_token %} {{ form.as_p }}
+      {% csrf_token %}
+      <input type="hidden" name="form_type" value="infrastructure_form" />
+      {{ form.as_p }}
       <button type="submit">Submit Infrastructure Info</button>
     </form>
     {% if suggestions %}
@@ -19,5 +25,14 @@
       {% endfor %}
     </ul>
     {% endif %}
+
+    <h1>Issues in Existing Infrastructure Projects</h1>
+    <p>Are there any issues in the existing projects? If yes, what exactly:</p>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="form_type" value="issues_form" />
+      {{ issues_form.as_p }}
+      <button type="submit">Submit Selected Issues</button>
+    </form>
   </body>
 </html>
