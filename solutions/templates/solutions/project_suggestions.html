@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project Suggestions</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <h1>Project Suggestions</h1>
+    <form method="post">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Submit Infrastructure Info</button>
+    </form>
+    {% if suggestions %}
+    <h2>Suggestions:</h2>
+    <ul>
+      {% for suggestion in suggestions %}
+      <li>{{ suggestion }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </body>
+</html>
