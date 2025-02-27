@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maintenance Options for {{ project.name }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Maintenance Options for {{ project.name }}</h1>
+
+      <p><strong>Project Type:</strong> {{ project.project_type }}</p>
+      <p><strong>Location:</strong> {{ project.location }}</p>
+      <p><strong>Description:</strong> {{ project.description }}</p>
+
+      <h2>Maintenance Suggestions:</h2>
+      <ul>
+        {% for option in options %}
+        <li>
+          <strong>Description:</strong> {{ option.description }} <br />
+          <strong>Cost:</strong> ${{ option.cost }} <br />
+          <strong>Frequency:</strong> {{ option.frequency }}
+        </li>
+        {% empty %}
+        <p>No maintenance options available for this project.</p>
+        {% endfor %}
+      </ul>
+
+      <a href="{% url 'material_list' %}" class="btn">Back to Materials List</a>
+    </div>
+  </body>
+</html>

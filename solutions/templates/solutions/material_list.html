@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Available Materials</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Available Materials</h1>
+
+      <h2>This is the list of available materials</h2>
+      <ul>
+        {% for material in materials %}
+        <li>
+          <strong>Name:</strong> {{ material.name }} <br />
+          <strong>Description:</strong> {{ material.description }} <br />
+          <strong>Material Classified Type:</strong> {{ material.material_type
+          }} <br />
+          <strong>Suitable for:</strong> {{ material.suitable_for }}
+        </li>
+        {% empty %}
+        <p>Empty Inventory!</p>
+        {% endfor %}
+      </ul>
+
+      <a href="{% url 'add_material' %}" class="btn">Add Material</a>
+    </div>
+  </body>
+</html>

@@ -1,22 +1,17 @@
 from django import forms
-from .models import Infrastructure   # This is the class which we created earlier in models.py file.
+from .models import Material, Project, MaintenanceOption
 
-class InfrastructureForm(forms.ModelForm):
-  class Meta:
-    model = Infrastructure
-    fields = ['project_type', 'location', 'budget', 'materials', 'issues']
-    widgets = {
-      'project_type': forms.Select(attrs={'class': 'form-control'}),
-      'location': forms.TextInput(attrs={'class': 'form-control'}),
-      'budget': forms.NumberInput(attrs={'class': 'form-control'}),
-      'materials': forms.Textarea(attrs={'class': 'form-control'}),
-      'issues': forms.Textarea(attrs={'class': 'form-control'}),
-    }
+class MaterialForm(forms.ModelForm):
+    class Meta:
+        model = Material
+        fields = ['name', 'description', 'material_type', 'suitable_for']
 
-class IssuesForm(forms.ModelForm):
-  class Meta:
-    model = Infrastructure
-    fields = ['issues']
-    widgets = {
-      'issues': forms.Textarea(attrs={'class': 'form-control'}),
-    }
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['name', 'project_type', 'location', 'description']
+
+class MaintenanceOptionForm(forms.ModelForm):
+    class Meta:
+        model = MaintenanceOption
+        fields = ['project', 'description', 'cost', 'frequency']
