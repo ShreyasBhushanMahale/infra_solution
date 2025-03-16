@@ -1,0 +1,11 @@
+{% extends 'base_generic.html' %} {% block content %}
+<h1>Project Detail</h1>
+<p><strong>Name:</strong> {{ project.name }}</p>
+<p><strong>Type:</strong> {{ project.project_type }}</p>
+<p><strong>Budget:</strong> {{ project.budget }}</p>
+<p><strong>Region:</strong> {{ project.region }}</p>
+<p>
+  <strong>Suggested Materials/Methods:</strong> {{ project.materials_suggested
+  }}
+</p>
+{% endblock %}

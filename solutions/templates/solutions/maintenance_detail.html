@@ -1,0 +1,10 @@
+{% extends 'base_generic.html' %} {% block content %}
+<h1>Maintenance Detail</h1>
+<p><strong>Project:</strong> {{ maintenance.project.name }}</p>
+<p><strong>Defect Details:</strong> {{ maintenance.defect_details }}</p>
+<p>
+  <strong>Next Maintenance Date:</strong> {{ maintenance.next_maintenance_date
+  }}
+</p>
+<p><strong>Action Suggested:</strong> {{ maintenance.action_suggested }}</p>
+{% endblock %}

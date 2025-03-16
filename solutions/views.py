@@ -6,7 +6,7 @@ from .models import Project, Maintenance
 def smart_suggestion_logic(project):
     # Implement suggestions based on project type
     if project.project_type == "Dam":
-        return "Use roller-compacted concrete for dam construction."
+        return "Use roller-compacted concrete and stone for dam construction."
     elif project.project_type == "Road":
         return "Use asphalt or reinforced concrete depending on traffic load."
     elif project.project_type == "Building":
@@ -37,10 +37,10 @@ def project_create(request):
             project.materials_suggested = smart_suggestion_logic(project)
             project.user = request.user  # Assuming the user is logged in
             project.save()
-            return redirect("project_detail", pk=project.pk)
+            return redirect("create_project.html", pk=project.pk)
     else:
         form = ProjectForm()
-    return render(request, "project_form.html", {"form": form})
+    return render(request, "create_project.html", {"form": form})
 
 
 def project_detail(request, pk):
