@@ -11,7 +11,7 @@ class Material(models.Model):
             ("steel", "Steel"),
             ("wood", "Wood"),
             ("glass", "Glass"),
-            ("ther building material", "Other Building Material"),
+            ("other building material", "Other Building Material"),
         ],
     )
     suitable_for = models.TextField(

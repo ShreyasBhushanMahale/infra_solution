@@ -1,30 +1,51 @@
-from django.shortcuts import redirect, render
-
-from solutions.forms import MaterialForm
-from .models import Material, Project, MaintenanceOption
+from django.shortcuts import render
+from .models import Material, MaintenanceOption
 
 
-def material_list(request):
-    materials = Material.objects.all()
-    return render(request, "solutions/material_list.html", {"materials": materials})
+# Function to suggest materials based on project type
+def suggest_materials(project_type):
+    material_suggestions = {
+        "building": ["Concrete", "Steel", "Glass"],
+        "bridge": ["Steel", "Concrete"],
+        "road": ["Asphalt", "Concrete"],
+        "tunnel": ["Concrete", "Steel"],
+        "dam": ["Concrete", "Steel"],
+    }
+    return material_suggestions.get(project_type, ["General Building Material"])
 
 
-def maintenance_options(request, project_id):
-    project = Project.objects.get(id=project_id)
-    options = MaintenanceOption.objects.filter(project=project)
-    return render(
-        request,
-        "solutions/maintenance_options.html",
-        {"project": project, "options": options},
-    )
+# Function to suggest maintenance options based on project type
+def suggest_maintenance(project_type):
+    maintenance_suggestions = {
+        "building": ["Annual HVAC check", "Fire safety inspection"],
+        "bridge": ["Yearly structural inspection", "Corrosion check"],
+        "road": ["Pothole repair", "Resurfacing"],
+        "tunnel": ["Structural integrity inspection", "Ventilation system check"],
+        "dam": ["Spillway inspection", "Seepage monitoring"],
+    }
+    return maintenance_suggestions.get(project_type, ["General Maintenance"])
 
 
-def add_material(request):
+def get_suggestions(request):
     if request.method == "POST":
-        form = MaterialForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("material_list")
-    else:
-        form = MaterialForm()
-    return render(request, "solutions/add_material.html", {"form": form})
+        project_type = request.POST.get("project_type")
+        location = request.POST.get("location")  # Not used yet, but can be later
+
+        # Get suggestions for materials and maintenance
+        materials = suggest_materials(project_type)
+        maintenance = suggest_maintenance(project_type)
+
+        # Pass the results to the template
+        return render(
+            request,
+            "solutions/suggestions.html",
+            {
+                "materials": materials,
+                "maintenance": maintenance,
+                "project_type": project_type,
+                "location": location,
+            },
+        )
+
+    # Render the form page
+    return render(request, "solutions/form.html")
