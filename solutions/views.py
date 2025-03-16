@@ -1,50 +1,66 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import ProjectForm, MaintenanceForm
+from .models import Project, Maintenance
 
 
-# Function to suggest materials based on project type
-def suggest_materials(project_type):
-    material_suggestions = {
-        "building": ["Concrete", "Steel", "Glass"],
-        "bridge": ["Steel", "Concrete"],
-        "road": ["Asphalt", "Concrete"],
-        "tunnel": ["Concrete", "Steel"],
-        "dam": ["Concrete", "Steel"],
-    }
-    return material_suggestions.get(project_type, ["General Building Material"])
+def smart_suggestion_logic(project):
+    # Implement suggestions based on project type
+    if project.project_type == "Dam":
+        return "Use roller-compacted concrete for dam construction."
+    elif project.project_type == "Road":
+        return "Use asphalt or reinforced concrete depending on traffic load."
+    elif project.project_type == "Building":
+        return "Use steel and concrete for high-rise buildings."
+    elif project.project_type == "Bridge":
+        return "Balanced cantilever method for bridge construction."
+    elif project.project_type == "Tunnel":
+        return "Bored tunnel method recommended for urban areas."
+    return "General construction materials recommended."
 
 
-# Function to suggest maintenance options based on project type
-def suggest_maintenance(project_type):
-    maintenance_suggestions = {
-        "building": ["Annual HVAC check", "Fire safety inspection"],
-        "bridge": ["Yearly structural inspection", "Corrosion check"],
-        "road": ["Pothole repair", "Resurfacing"],
-        "tunnel": ["Structural integrity inspection", "Ventilation system check"],
-        "dam": ["Spillway inspection", "Seepage monitoring"],
-    }
-    return maintenance_suggestions.get(project_type, ["General Maintenance"])
+def maintenance_suggestion_logic(maintenance):
+    # Implement suggestions based on defect details
+    defect = maintenance.defect_details.lower()
+    if "crack" in defect:
+        return "Inspect structural integrity and consider repairs."
+    elif "leak" in defect:
+        return "Check for water damage and promptly seal leaks."
+    # Additional conditions can be added here.
+    return "Schedule a detailed maintenance inspection."
 
 
-def get_suggestions(request):
+def project_create(request):
     if request.method == "POST":
-        project_type = request.POST.get("project_type")
-        location = request.POST.get("location")  # Not used yet, but can be later
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            project = form.save(commit=False)
+            project.materials_suggested = smart_suggestion_logic(project)
+            project.user = request.user  # Assuming the user is logged in
+            project.save()
+            return redirect("project_detail", pk=project.pk)
+    else:
+        form = ProjectForm()
+    return render(request, "project_form.html", {"form": form})
 
-        # Get suggestions for materials and maintenance
-        materials = suggest_materials(project_type)
-        maintenance = suggest_maintenance(project_type)
 
-        # Pass the results to the template
-        return render(
-            request,
-            "solutions/suggestions.html",
-            {
-                "materials": materials,
-                "maintenance": maintenance,
-                "project_type": project_type,
-                "location": location,
-            },
-        )
+def project_detail(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    return render(request, "project_detail.html", {"project": project})
 
-    # Render the form page
-    return render(request, "solutions/form.html")
+
+def maintenance_create(request):
+    if request.method == "POST":
+        form = MaintenanceForm(request.POST)
+        if form.is_valid():
+            maintenance = form.save(commit=False)
+            maintenance.action_suggested = maintenance_suggestion_logic(maintenance)
+            maintenance.save()
+            return redirect("maintenance_detail", pk=maintenance.pk)
+    else:
+        form = MaintenanceForm()
+    return render(request, "maintenance_form.html", {"form": form})
+
+
+def maintenance_detail(request, pk):
+    maintenance = get_object_or_404(Maintenance, pk=pk)
+    return render(request, "maintenance_detail.html", {"maintenance": maintenance})

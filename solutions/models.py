@@ -1,51 +1,33 @@
+# The models:
 from django.db import models
-
-
-class Material(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    material_type = models.CharField(
-        max_length=100,
-        choices=[
-            ("concrete", "Concrete"),
-            ("steel", "Steel"),
-            ("wood", "Wood"),
-            ("glass", "Glass"),
-            ("other building material", "Other Building Material"),
-        ],
-    )
-    suitable_for = models.TextField(
-        help_text="Type of projects this material is suitable for (bridges/buildings/dams/roadways/tunnels)"
-    )
-
-    def __str__(self):
-        return self.name
+from django.contrib.auth.models import User
 
 
 class Project(models.Model):
+    PROJECT_TYPE_CHOICES = [
+        ("Building", "Building"),
+        ("Bridge", "Bridge"),
+        ("Tunnel", "Tunnel"),
+        ("Dam", "Dam"),
+        ("Road", "Road"),
+    ]
+
     name = models.CharField(max_length=200)
-    project_type = models.CharField(
-        max_length=100,
-        choices=[
-            ("building", "Building"),
-            ("bridge", "Bridge"),
-            ("road", "Road"),
-            ("tunnel", "Tunnel"),
-            ("dam", "Dam"),
-        ],
-    )
-    location = models.CharField(max_length=255)
-    description = models.TextField()
+    project_type = models.CharField(max_length=50, choices=PROJECT_TYPE_CHOICES)
+    budget = models.DecimalField(max_digits=12, decimal_places=2)
+    region = models.CharField(max_length=200)
+    materials_suggested = models.TextField(blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 
-class MaintenanceOption(models.Model):
+class Maintenance(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    description = models.TextField()
-    cost = models.DecimalField(max_digits=10, decimal_places=2)
-    frequency = models.CharField(max_length=50, help_text="E.g., monthly, yearly")
+    defect_details = models.TextField()
+    next_maintenance_date = models.DateField()
+    action_suggested = models.TextField()
 
     def __str__(self):
         return f"Maintenance for {self.project.name}"

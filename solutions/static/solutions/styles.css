@@ -1,40 +1,82 @@
+/* General styles */
 body {
   font-family: Arial, sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container */
+.container {
+  width: 80%;
+  margin: 0 auto;
   padding: 20px;
-  background-color: bisque;
-}
-
-h1 {
-  color: darkolivegreen;
-}
-
-form {
   background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-label {
-  font-size: 16px;
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-input,
-select,
-button {
+/* Navigation */
+nav {
+  background-color: #444;
   padding: 10px;
-  font-size: 16px;
-  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 10px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Headings */
+h1,
+h2,
+h3 {
+  color: #444;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #444;
+  color: #fff;
+}
+
+/* Forms */
+form {
   margin-bottom: 20px;
 }
 
 button {
-  background-color: #007bff;
-  color: white;
+  background-color: #444;
+  color: #fff;
   border: none;
+  padding: 10px 15px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: crimson;
+  background-color: #333;
 }

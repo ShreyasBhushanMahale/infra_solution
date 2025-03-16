@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Infrastructure Solutions</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'solutions/styles.css' %}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Infrastructure Solutions</h1>
+      </header>
+      <nav>
+        <ul class="nav">
+          <li class="nav-item">
+            <a href="{% url 'project_create' %}">Create Project</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'maintenance_create' %}">Create Maintenance</a>
+          </li>
+        </ul>
+      </nav>
+      <main>{% block content %} {% endblock %}</main>
+      <footer>
+        <p>&copy; 2025 Infrastructure Solutions</p>
+      </footer>
+    </div>
+  </body>
+</html>
