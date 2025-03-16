@@ -15,7 +15,7 @@
       <p><strong>Location:</strong> {{ project.location }}</p>
       <p><strong>Description:</strong> {{ project.description }}</p>
 
-      <h2>Maintenance Suggestions:</h2>
+      <h2>Some common maintenance suggestions:</h2>
       <ul>
         {% for option in options %}
         <li>
@@ -24,7 +24,7 @@
           <strong>Frequency:</strong> {{ option.frequency }}
         </li>
         {% empty %}
-        <p>No maintenance options available for this project.</p>
+        <p>No maintenance options available for this project!</p>
         {% endfor %}
       </ul>
 

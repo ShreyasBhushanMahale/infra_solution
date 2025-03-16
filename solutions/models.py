@@ -11,10 +11,11 @@ class Material(models.Model):
             ("steel", "Steel"),
             ("wood", "Wood"),
             ("glass", "Glass"),
+            ("ther building material", "Other Building Material"),
         ],
     )
     suitable_for = models.TextField(
-        help_text="Type of projects this material is suitable for (e.g., bridges, buildings)"
+        help_text="Type of projects this material is suitable for (bridges/buildings/dams/roadways/tunnels)"
     )
 
     def __str__(self):

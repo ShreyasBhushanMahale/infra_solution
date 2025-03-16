@@ -11,7 +11,7 @@
     <div class="container">
       <h1>Available Materials</h1>
 
-      <h2>This is the list of available materials</h2>
+      <h2>List of Available Materials</h2>
       <ul>
         {% for material in materials %}
         <li>
@@ -22,7 +22,7 @@
           <strong>Suitable for:</strong> {{ material.suitable_for }}
         </li>
         {% empty %}
-        <p>Empty Inventory!</p>
+        <p>Empty Material Inventory!</p>
         {% endfor %}
       </ul>
 
