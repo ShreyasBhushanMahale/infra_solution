@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from .models import Material, MaintenanceOption
 
 
 # Function to suggest materials based on project type
