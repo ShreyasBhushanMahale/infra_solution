@@ -40,7 +40,7 @@ def project_create(request):
             return redirect("create_project.html", pk=project.pk)
     else:
         form = ProjectForm()
-    return render(request, "create_project.html", {"form": form})
+    return render(request, "solutions/create_project.html", {"form": form})
 
 
 def project_detail(request, pk):
@@ -55,10 +55,10 @@ def maintenance_create(request):
             maintenance = form.save(commit=False)
             maintenance.action_suggested = maintenance_suggestion_logic(maintenance)
             maintenance.save()
-            return redirect("maintenance_detail", pk=maintenance.pk)
+            return redirect("maintenance_detail.html", pk=maintenance.pk)
     else:
         form = MaintenanceForm()
-    return render(request, "maintenance_form.html", {"form": form})
+    return render(request, "solutions/create_maintenance.html", {"form": form})
 
 
 def maintenance_detail(request, pk):
